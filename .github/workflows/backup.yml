@@ -1,0 +1,27 @@
+name: Copia de seguridad
+
+on:
+  workflow_dispatch:
+
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Volcar Postgres
+        env:
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}
+        run: |
+          if [ -z "$DATABASE_URI" ]; then
+            echo "Falta el secreto DATABASE_URI. La copia no se ejecutó."
+            exit 1
+          fi
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          mkdir -p backups
+          pg_dump --format=custom --file="backups/pijamas-$(date -u +%Y%m%d).dump" "$DATABASE_URI"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: postgres-dump
+          path: backups/*.dump
+          retention-days: 56

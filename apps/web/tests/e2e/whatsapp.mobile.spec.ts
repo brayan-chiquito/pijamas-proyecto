@@ -1,0 +1,41 @@
+import { expect, test } from '@playwright/test'
+
+test('la compra por WhatsApp funciona en el móvil', async ({ page }) => {
+  await page.goto('/')
+  const category = page.locator('a[href="/categorias/hombre"]')
+  await expect(category).toBeVisible()
+  await category.evaluate((link) => link.scrollIntoView({ block: 'center' }))
+  await category.click()
+  await expect(page).toHaveURL(/\/categorias\/hombre/)
+  await page.getByRole('link', { name: /Bata suave de casa/ }).click()
+  await expect(page.getByRole('heading', { level: 1, name: 'Bata suave de casa' })).toBeVisible()
+
+  await page.getByRole('radio', { name: 'M' }).click()
+  await page.getByRole('radio', { name: 'Rosa' }).click()
+  await page.getByRole('spinbutton', { name: 'Cantidad' }).fill('2')
+  await page.getByRole('button', { name: 'Agregar al carrito' }).click()
+  await expect(page.getByRole('status')).toHaveText('Agregado al carrito')
+  await expect(page.getByRole('link', { name: /Carrito/ })).toContainText('2')
+
+  await page.goto('/finalizar-pedido')
+  await page.getByRole('button', { name: 'Enviar pedido por WhatsApp' }).click()
+  await expect(page.getByText('Escribe tu nombre')).toBeVisible()
+
+  await page.getByLabel('Nombre').fill('Ana')
+  await page.getByLabel('Ciudad o zona').fill('Medellín')
+  await page.getByRole('button', { name: 'Enviar pedido por WhatsApp' }).click()
+
+  const link = page.getByRole('link', { name: 'Abrir WhatsApp de nuevo' })
+  await expect(link).toBeVisible()
+  const href = await link.getAttribute('href')
+  const url = new URL(href!)
+  expect(url.hostname).toBe('wa.me')
+  expect(url.pathname).toBe('/573001112233')
+  const message = decodeURIComponent(url.searchParams.get('text') || '')
+  expect(message).toContain('Ana')
+  expect(message).toContain('Bata suave de casa')
+  expect(message).toContain('M')
+  expect(message).toContain('2')
+  expect(message).toMatch(/239\.800|239800/)
+  expect(message.toLowerCase()).not.toContain('pedido confirmado')
+})

@@ -1,0 +1,37 @@
+{
+  "name": "pijamas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tienda online de pijamas: Next.js 16 + Payload CMS 3, cierre de pedido por WhatsApp",
+  "packageManager": "pnpm@10.34.7",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "pnpm -r test",
+    "test:integration": "pnpm --filter web test:integration",
+    "test:e2e": "pnpm --filter web test:e2e",
+    "check": "pnpm typecheck && pnpm lint && pnpm test",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.0",
+    "eslint-config-next": "16.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.4.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.7.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.46.0"
+  }
+}

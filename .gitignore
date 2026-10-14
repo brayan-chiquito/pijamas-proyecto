@@ -1,0 +1,45 @@
+# Dependencias
+node_modules/
+
+# Entorno (el contrato es .env.example)
+.env
+.env.*
+!.env.example
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Payload
+apps/web/media/
+
+# Pruebas
+coverage/
+test-results/
+playwright-report/
+blob-report/
+.lighthouseci/
+playwright/.cache/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Vercel
+.vercel
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Copias locales
+backups/
