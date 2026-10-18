@@ -1,0 +1,14 @@
+diff --git a/dist/layouts/Root/index.js b/dist/layouts/Root/index.js
+index 8379548499ea33a0191ddd7f87c7d34fc0abf658..64d296956dea6e7663bfed02d492fa4b221fdb22 100644
+--- a/dist/layouts/Root/index.js
++++ b/dist/layouts/Root/index.js	
+@@ -106,7 +106,9 @@ const RootLayoutContent = async ({
+     suppressHydrationWarning: config?.admin?.suppressHydrationWarning ?? false,
+     ...htmlProps,
+     children: [/*#__PURE__*/_jsx("head", {
++      // Cliente (CSS merge) puede reescribir este <style>; sin esto Next muestra "1 Issue" en /admin.
+       children: /*#__PURE__*/_jsx("style", {
++        suppressHydrationWarning: true,
+         children: `@layer payload-default, payload;`
+       })
+     }), /*#__PURE__*/_jsxs("body", {

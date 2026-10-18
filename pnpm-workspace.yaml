@@ -7,3 +7,5 @@ onlyBuiltDependencies:
   - esbuild
   - unrs-resolver
   - '@tailwindcss/oxide'
+patchedDependencies:
+  '@payloadcms/next@3.90.2': patches/@payloadcms__next@3.90.2.patch

@@ -3,6 +3,7 @@ import type { GlobalConfig } from 'payload'
 
 import { anyone, staff } from '@/access'
 import { revalidateStoreTags, tagsForCollection } from '@/hooks/revalidate'
+import { storePreviewUrl } from '@/lib/preview'
 
 const revalidate = () => {
   const target = tagsForCollection('site-settings')
@@ -12,7 +13,14 @@ const revalidate = () => {
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   label: 'Configuración del sitio',
-  admin: { group: 'Sitio', description: 'Marca, WhatsApp, contacto y textos que se repiten en toda la tienda.' },
+  admin: {
+    group: 'Sitio',
+    description:
+      'Marca, WhatsApp, contacto y textos de toda la tienda. Abre el ojo para ver el inicio mientras guardas.',
+    livePreview: {
+      url: () => storePreviewUrl('/'),
+    },
+  },
   access: { read: anyone, update: staff },
   hooks: { afterChange: [revalidate] },
   fields: [

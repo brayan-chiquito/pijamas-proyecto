@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
 import { Fraunces, Nunito_Sans } from 'next/font/google'
+import { draftMode } from 'next/headers'
 import React from 'react'
 
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
+import { DraftPreviewBanner } from '@/components/store/DraftPreviewBanner'
+import { LivePreviewListener } from '@/components/store/LivePreviewListener'
 import { getNavigation, getSettings } from '@/lib/catalog/queries'
 import { organizationJsonLd, JsonLd } from '@/lib/seo'
 
@@ -27,12 +30,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
-  const [settings, navigation] = await Promise.all([getSettings(), getNavigation()])
+  const [{ isEnabled: isDraftPreview }, settings, navigation] = await Promise.all([
+    draftMode(),
+    getSettings(),
+    getNavigation(),
+  ])
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
   return (
     <html lang="es" data-scroll-behavior="smooth" className={`${fraunces.variable} ${nunito.variable}`}>
       <body>
+        {isDraftPreview ? <DraftPreviewBanner /> : null}
+        <LivePreviewListener />
         <SiteHeader
           siteName={settings.siteName}
           links={navigation.header}

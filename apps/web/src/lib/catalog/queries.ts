@@ -263,6 +263,7 @@ export async function getHome() {
       slug: 'home-page',
       depth: 2,
       draft: isEnabled,
+      overrideAccess: isEnabled,
     })
     return doc
   }

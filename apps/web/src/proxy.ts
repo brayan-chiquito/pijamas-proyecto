@@ -15,7 +15,8 @@ function contentSecurityPolicy(nonce: string) {
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
-    "frame-ancestors 'none'",
+    // 'self' permite el iframe del Live Preview del admin (mismo origen).
+    "frame-ancestors 'self'",
   ].join('; ')
 }
 

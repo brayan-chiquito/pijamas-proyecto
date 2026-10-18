@@ -4,6 +4,7 @@ import { publishedOrStaff, staff } from '@/access'
 import { slugFromTitle, slugTextField } from '@/fields/slug'
 import { revalidateStoreTags, tagsForCollection } from '@/hooks/revalidate'
 import { setPublishedAt } from '@/hooks/setPublishedAt'
+import { storePreviewUrl } from '@/lib/preview'
 
 const validateProduct: CollectionBeforeValidateHook = ({ data }) => {
   if (!data) return data
@@ -71,18 +72,16 @@ export const Products: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Catálogo',
-    description: 'Fichas de producto. Guarda borrador, previsualiza y publica cuando esté listo.',
+    description:
+      'Fichas de producto. Usa el icono del ojo (vista previa) para ver la tienda al lado mientras editas; el borrador se guarda solo cada poco.',
     defaultColumns: ['title', 'price', 'inventoryMode', '_status', 'updatedAt'],
     livePreview: {
-      url: ({ data }) => {
-        const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
-        return `${base}/productos/${data?.slug || ''}`
-      },
+      url: ({ data }) => storePreviewUrl(`/productos/${data?.slug || ''}`),
     },
   },
   versions: {
     drafts: {
-      autosave: { interval: 2000 },
+      autosave: { interval: 375 },
     },
   },
   access: {

@@ -31,9 +31,14 @@ Write-Host '3/4 Construyendo la app (incluye catálogo de demostración; la prim
 docker compose -f docker-compose.demo.yml build web
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-Write-Host '4/4 Levantando la tienda...'
+Write-Host '4/5 Levantando la tienda...'
 docker compose -f docker-compose.demo.yml up -d web
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+Write-Host '5/5 Sincronizando fotos al disco local (por si luego usas pnpm)...'
+$mediaHost = Join-Path (Get-Location) 'apps\web\media'
+New-Item -ItemType Directory -Force -Path $mediaHost | Out-Null
+docker run --rm -v 'pijamas-demo_pijamas-demo-media:/from' -v "${mediaHost}:/to" alpine sh -c 'cp -a /from/. /to/' | Out-Null
 
 Write-Host ''
 Write-Host 'Listo.'

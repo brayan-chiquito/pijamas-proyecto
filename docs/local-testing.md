@@ -110,3 +110,4 @@ Detalle paso a paso: [`docs/admin-guide.md`](admin-guide.md).
 | Build falla al conectar a Postgres | Asegúrate de que el paso 1 del script dejó Postgres sano (`docker ps`). |
 | Panel sin productos | `docker compose -f docker-compose.demo.yml --profile seed run --rm seed` |
 | No entra al admin | Correo y contraseña de demostración de arriba. |
+| Imágenes rotas tras usar Docker y luego `pnpm` | El script `demo-up` ya copia las fotos a `apps/web/media`. Si faltan: vuelve a ejecutar `demo-up` o `pnpm --filter web seed`. |

@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { anyone, staff } from '@/access'
 import { slugFromTitle, slugTextField } from '@/fields/slug'
 import { revalidateStoreTags, tagsForCollection } from '@/hooks/revalidate'
+import { storePreviewUrl } from '@/lib/preview'
 
 export const Collections: CollectionConfig = {
   slug: 'collections',
@@ -10,7 +11,11 @@ export const Collections: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Catálogo',
-    description: 'Selecciones curadas, por ejemplo Novedades o Invierno. Un producto puede estar en varias.',
+    description:
+      'Selecciones curadas (Novedades, Invierno…). Abre el ojo para ver la colección en la tienda al guardar.',
+    livePreview: {
+      url: ({ data }) => storePreviewUrl(`/colecciones/${data?.slug || ''}`),
+    },
   },
   access: {
     read: anyone,

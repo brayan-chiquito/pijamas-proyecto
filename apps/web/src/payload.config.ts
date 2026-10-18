@@ -33,6 +33,8 @@ export default buildConfig({
   admin: {
     theme: 'light',
     user: Users.slug,
+    // Evita avisos de hidratación en <html> (tema/dir). El de <style> se parchea en @payloadcms/next.
+    suppressHydrationWarning: true,
     importMap: {
       baseDir: path.resolve(dirname),
     },

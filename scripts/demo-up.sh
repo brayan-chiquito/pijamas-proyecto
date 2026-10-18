@@ -31,8 +31,15 @@ fi
 echo "3/4 Construyendo la app (incluye catálogo de demostración; la primera vez tarda varios minutos)..."
 "${compose[@]}" build web
 
-echo "4/4 Levantando la tienda..."
+echo "4/5 Levantando la tienda..."
 "${compose[@]}" up -d web
+
+echo "5/5 Sincronizando fotos al disco local (por si luego usas pnpm)..."
+mkdir -p apps/web/media
+docker run --rm \
+  -v pijamas-demo_pijamas-demo-media:/from \
+  -v "$(pwd)/apps/web/media:/to" \
+  alpine sh -c 'cp -a /from/. /to/'
 
 echo
 echo "Listo."

@@ -2,6 +2,7 @@ import type { GlobalConfig } from 'payload'
 
 import { anyone, staff } from '@/access'
 import { revalidateStoreTags, tagsForCollection } from '@/hooks/revalidate'
+import { storePreviewUrl } from '@/lib/preview'
 
 const linkFields = [
   { name: 'label', label: 'Texto', type: 'text' as const, required: true },
@@ -17,7 +18,13 @@ const linkFields = [
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
   label: 'Navegación',
-  admin: { group: 'Sitio' },
+  admin: {
+    group: 'Sitio',
+    description: 'Menú y pie. Abre el ojo para ver cómo quedan los enlaces en la tienda al guardar.',
+    livePreview: {
+      url: () => storePreviewUrl('/'),
+    },
+  },
   access: { read: anyone, update: staff },
   hooks: {
     afterChange: [

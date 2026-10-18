@@ -18,13 +18,11 @@ const nextConfig: NextConfig = {
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/media/**' }],
   },
   async headers() {
+    // SAMEORIGIN (no DENY): el Live Preview del admin embebe la tienda en un iframe
+    // del mismo origen. DENY hace que Chrome muestre error en el panel derecho.
     return [
       {
-        source: '/((?!admin).*)',
-        headers: [...securityHeaders, { key: 'X-Frame-Options', value: 'DENY' }],
-      },
-      {
-        source: '/admin/:path*',
+        source: '/:path*',
         headers: [...securityHeaders, { key: 'X-Frame-Options', value: 'SAMEORIGIN' }],
       },
     ]

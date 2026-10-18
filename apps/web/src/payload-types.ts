@@ -234,7 +234,7 @@ export interface Media {
   };
 }
 /**
- * Agrupación principal del catálogo, por ejemplo Mujer, Hombre o Infantil.
+ * Agrupación principal del catálogo (Mujer, Hombre, Infantil). Abre el ojo para ver la categoría en la tienda al guardar.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
@@ -267,7 +267,7 @@ export interface Category {
   createdAt: string;
 }
 /**
- * Selecciones curadas, por ejemplo Novedades o Invierno. Un producto puede estar en varias.
+ * Selecciones curadas (Novedades, Invierno…). Abre el ojo para ver la colección en la tienda al guardar.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "collections".
@@ -310,7 +310,7 @@ export interface Tag {
   createdAt: string;
 }
 /**
- * Fichas de producto. Guarda borrador, previsualiza y publica cuando esté listo.
+ * Fichas de producto. Usa el icono del ojo (vista previa) para ver la tienda al lado mientras editas; el borrador se guarda solo cada poco.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products".
@@ -438,7 +438,7 @@ export interface Product {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Textos institucionales: nosotros, envíos, privacidad y similares.
+ * Textos institucionales: nosotros, envíos, privacidad y similares. Abre la vista previa (ojo) para ver el resultado al editar.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
@@ -930,7 +930,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Marca, WhatsApp, contacto y textos que se repiten en toda la tienda.
+ * Marca, WhatsApp, contacto y textos de toda la tienda. Abre el ojo para ver el inicio mientras guardas.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
@@ -985,6 +985,8 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * Menú y pie. Abre el ojo para ver cómo quedan los enlaces en la tienda al guardar.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
@@ -1021,7 +1023,7 @@ export interface Navigation {
   createdAt?: string | null;
 }
 /**
- * Hero, categorías y productos destacados de la portada.
+ * Hero, categorías y productos destacados de la portada. Abre la vista previa (ojo) para ver los cambios al lado mientras escribes.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page".

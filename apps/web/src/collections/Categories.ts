@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { anyone, staff } from '@/access'
 import { slugFromTitle, slugTextField } from '@/fields/slug'
 import { revalidateStoreTags, tagsForCollection } from '@/hooks/revalidate'
+import { storePreviewUrl } from '@/lib/preview'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -10,8 +11,12 @@ export const Categories: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Catálogo',
-    description: 'Agrupación principal del catálogo, por ejemplo Mujer, Hombre o Infantil.',
+    description:
+      'Agrupación principal del catálogo (Mujer, Hombre, Infantil). Abre el ojo para ver la categoría en la tienda al guardar.',
     defaultColumns: ['title', 'slug', 'order'],
+    livePreview: {
+      url: ({ data }) => storePreviewUrl(`/categorias/${data?.slug || ''}`),
+    },
   },
   defaultSort: 'order',
   access: {

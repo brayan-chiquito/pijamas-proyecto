@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@payloadcms/next@3.90.2':
+    hash: c7f0f8b123ea77779d75b53b9cba6c7530b02174440fcb2ca5c1dbbf5bccc6ad
+    path: patches/@payloadcms__next@3.90.2.patch
+
 importers:
 
   .:
@@ -41,9 +46,12 @@ importers:
       '@payloadcms/db-postgres':
         specifier: 3.90.2
         version: 3.90.2(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))
+      '@payloadcms/live-preview-react':
+        specifier: 3.90.2
+        version: 3.90.2(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@payloadcms/next':
         specifier: 3.90.2
-        version: 3.90.2(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)
+        version: 3.90.2(patch_hash=c7f0f8b123ea77779d75b53b9cba6c7530b02174440fcb2ca5c1dbbf5bccc6ad)(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)
       '@payloadcms/plugin-redirects':
         specifier: 3.90.2
         version: 3.90.2(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))
@@ -52,7 +60,7 @@ importers:
         version: 3.90.2(@types/react@19.3.0)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)
       '@payloadcms/richtext-lexical':
         specifier: 3.90.2
-        version: 3.90.2(@faceless-ui/modal@3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@faceless-ui/scroll-info@2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@payloadcms/next@3.90.2(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3))(@types/react@19.3.0)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)(yjs@13.6.33)
+        version: 3.90.2(@faceless-ui/modal@3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@faceless-ui/scroll-info@2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@payloadcms/next@3.90.2(patch_hash=c7f0f8b123ea77779d75b53b9cba6c7530b02174440fcb2ca5c1dbbf5bccc6ad)(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3))(@types/react@19.3.0)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)(yjs@13.6.33)
       '@payloadcms/storage-vercel-blob':
         specifier: 3.90.2
         version: 3.90.2(@types/react@19.3.0)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)
@@ -1482,6 +1490,15 @@ packages:
     peerDependencies:
       graphql: ^16.8.1
       payload: 3.90.2
+
+  '@payloadcms/live-preview-react@3.90.2':
+    resolution: {integrity: sha512-hMIlWbZ/WztaOoJi/bMClLVTIJ9jaBHVZammwqtxztjv9okg6xuIzmuZC4k/xBEVa/7nkQQOVig+dgX9fOODkw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.1 || ^19.1.2 || ^19.2.1
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.1 || ^19.1.2 || ^19.2.1
+
+  '@payloadcms/live-preview@3.90.2':
+    resolution: {integrity: sha512-N9ryFbTPHgfHOBRK9jLDzR8Gb1OnZWP2JVW11m45Mh89b7eNW7ZDtRtOEMEWocJo7v6xRGBmiiMW6qXrThmR7A==}
 
   '@payloadcms/next@3.90.2':
     resolution: {integrity: sha512-ED5aP8LTG2S7jJl1v9zZMlcq9ZXgjWSVsUvILJsd2UwKNI5ingGsPuQVXxTFHicv2Zj9R0WFa+d6g6iqZWQcCg==}
@@ -7708,7 +7725,15 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@payloadcms/next@3.90.2(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)':
+  '@payloadcms/live-preview-react@3.90.2(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+    dependencies:
+      '@payloadcms/live-preview': 3.90.2
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+
+  '@payloadcms/live-preview@3.90.2': {}
+
+  '@payloadcms/next@3.90.2(patch_hash=c7f0f8b123ea77779d75b53b9cba6c7530b02174440fcb2ca5c1dbbf5bccc6ad)(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)':
     dependencies:
       '@dnd-kit/core': 6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@dnd-kit/modifiers': 9.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)
@@ -7771,7 +7796,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@payloadcms/richtext-lexical@3.90.2(@faceless-ui/modal@3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@faceless-ui/scroll-info@2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@payloadcms/next@3.90.2(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3))(@types/react@19.3.0)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)(yjs@13.6.33)':
+  '@payloadcms/richtext-lexical@3.90.2(@faceless-ui/modal@3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@faceless-ui/scroll-info@2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@payloadcms/next@3.90.2(patch_hash=c7f0f8b123ea77779d75b53b9cba6c7530b02174440fcb2ca5c1dbbf5bccc6ad)(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3))(@types/react@19.3.0)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)(yjs@13.6.33)':
     dependencies:
       '@faceless-ui/modal': 3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@faceless-ui/scroll-info': 2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -7786,7 +7811,7 @@ snapshots:
       '@lexical/selection': 0.50.0(typescript@5.9.3)
       '@lexical/table': 0.50.0(typescript@5.9.3)
       '@lexical/utils': 0.50.0(typescript@5.9.3)
-      '@payloadcms/next': 3.90.2(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)
+      '@payloadcms/next': 3.90.2(patch_hash=c7f0f8b123ea77779d75b53b9cba6c7530b02174440fcb2ca5c1dbbf5bccc6ad)(@types/react@19.3.0)(graphql@16.14.2)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)
       '@payloadcms/translations': 3.90.2
       '@payloadcms/ui': 3.90.2(@types/react@19.3.0)(monaco-editor@0.57.0)(next@16.4.0(@babel/core@7.29.7)(@playwright/test@1.64.0)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@16.14.2)(typescript@5.9.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@5.9.3)
       acorn: 8.16.0

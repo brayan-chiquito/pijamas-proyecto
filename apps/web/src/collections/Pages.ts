@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { publishedOrStaff, staff } from '@/access'
 import { slugFromTitle, slugTextField } from '@/fields/slug'
 import { revalidateStoreTags, tagsForCollection } from '@/hooks/revalidate'
+import { storePreviewUrl } from '@/lib/preview'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -10,16 +11,14 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Contenido',
-    description: 'Textos institucionales: nosotros, envíos, privacidad y similares.',
+    description:
+      'Textos institucionales: nosotros, envíos, privacidad y similares. Abre la vista previa (ojo) para ver el resultado al editar.',
     livePreview: {
-      url: ({ data }) => {
-        const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
-        return `${base}/${data?.slug || ''}`
-      },
+      url: ({ data }) => storePreviewUrl(`/${data?.slug || ''}`),
     },
   },
   versions: {
-    drafts: { autosave: { interval: 2000 } },
+    drafts: { autosave: { interval: 375 } },
   },
   access: {
     read: publishedOrStaff,

@@ -2,18 +2,20 @@ import type { GlobalConfig } from 'payload'
 
 import { anyone, staff } from '@/access'
 import { revalidateStoreTags, tagsForCollection } from '@/hooks/revalidate'
+import { storePreviewUrl } from '@/lib/preview'
 
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
   label: 'Página de inicio',
   admin: {
     group: 'Contenido',
-    description: 'Hero, categorías y productos destacados de la portada.',
+    description:
+      'Hero, categorías y productos destacados de la portada. Abre la vista previa (ojo) para ver los cambios al lado mientras escribes.',
     livePreview: {
-      url: () => process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+      url: () => storePreviewUrl('/'),
     },
   },
-  versions: { drafts: { autosave: { interval: 2000 } } },
+  versions: { drafts: { autosave: { interval: 375 } } },
   access: { read: anyone, update: staff },
   hooks: {
     afterChange: [
