@@ -20,6 +20,7 @@ Tienda profesional para la venta de pijamas con catálogo administrable, carrito
 | [`docs/costs.md`](docs/costs.md) | Estimación de costos iniciales y recurrentes |
 | [`docs/project-structure.md`](docs/project-structure.md) | Estructura del monorepo y reglas de dependencia |
 | [`docs/admin-guide.md`](docs/admin-guide.md) | Guía de uso del panel para la propietaria |
+| [`docs/local-testing.md`](docs/local-testing.md) | Cómo arrancar en local y probar tienda + panel |
 | [`prompts/`](prompts/README.md) | Prompts por fase para ejecutar el proyecto con Cursor |
 | [`AGENTS.md`](AGENTS.md) | Reglas y convenciones para agentes de Cursor |
 | [`design/README.md`](design/README.md) | Flujo de diseño con pen.dev |
@@ -36,11 +37,39 @@ Tienda profesional para la venta de pijamas con catálogo administrable, carrito
 
 ## Requisitos
 
-- Node.js 22 LTS (probado con 22.13)
-- pnpm 10 (`corepack enable`)
-- Docker Desktop (Postgres local) o una cadena de conexión Postgres
+- **Probar solo con Docker:** Docker Desktop (no hace falta instalar Node)
+- **Desarrollar:** Node.js 22 LTS (probado con 22.13), pnpm 10 (`corepack enable`) y Docker Desktop (Postgres)
 
-## Instalación
+## Probar solo con Docker (otra máquina / cliente)
+
+Desde la raíz del repositorio, con Docker Desktop en marcha:
+
+```powershell
+# Windows
+powershell -ExecutionPolicy Bypass -File .\scripts\demo-up.ps1
+```
+
+```bash
+# macOS / Linux
+chmod +x scripts/demo-up.sh && ./scripts/demo-up.sh
+```
+
+- Tienda: http://localhost:3000  
+- Panel: http://localhost:3000/admin  
+- Usuario: `admin@pijamas.local` · Contraseña: `cambia-esta-clave`
+
+La primera vez construye la imagen (varios minutos). Después basta con:
+
+```bash
+docker compose -f docker-compose.demo.yml up -d
+```
+
+Parar: `docker compose -f docker-compose.demo.yml down`  
+Borrar datos de demo: `docker compose -f docker-compose.demo.yml down -v`
+
+Detalle: [`docs/local-testing.md`](docs/local-testing.md).
+
+## Instalación para desarrollo (Node + pnpm)
 
 ```bash
 corepack enable
@@ -69,7 +98,8 @@ Credenciales iniciales del panel: las definidas en `SEED_ADMIN_EMAIL` y `SEED_AD
 | `pnpm check` | typecheck + lint + test |
 | `pnpm --filter web payload migrate:create` | Generar migración tras cambiar colecciones |
 | `pnpm --filter web generate:types` | Regenerar `payload-types.ts` |
-| `pnpm db:up` / `pnpm db:down` | Levantar / detener Postgres local |
+| `pnpm db:up` / `pnpm db:down` | Levantar / detener Postgres local (solo base, para desarrollo) |
+| `pnpm demo:docker` | Tienda completa con Docker (`scripts/demo-up`) |
 
 ## Funcionamiento
 

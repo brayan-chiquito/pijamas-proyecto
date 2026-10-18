@@ -1,0 +1,89 @@
+# Tienda completa solo con Docker (Postgres + app).
+# Arranque recomendado: scripts/demo-up.ps1 (Windows) o scripts/demo-up.sh (macOS/Linux).
+#
+# Tras el primer build:
+#   docker compose -f docker-compose.demo.yml up -d
+# Parar:
+#   docker compose -f docker-compose.demo.yml down
+# Borrar también los datos de demostración:
+#   docker compose -f docker-compose.demo.yml down -v
+
+name: pijamas-demo
+
+x-demo-secrets: &demo-secrets
+  PAYLOAD_SECRET: cambia-este-secreto-por-uno-de-al-menos-32-caracteres
+  PREVIEW_SECRET: cambia-este-secreto-de-vista-previa
+  REVALIDATION_SECRET: cambia-este-secreto-de-revalidacion
+  SEED_ADMIN_EMAIL: admin@pijamas.local
+  SEED_ADMIN_PASSWORD: cambia-esta-clave
+  NEXT_PUBLIC_SERVER_URL: http://localhost:3000
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: pijamas-demo-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pijamas
+    ports:
+      - '5433:5432'
+    volumes:
+      - pijamas-demo-postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d pijamas']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  seed:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: seeder
+    profiles: ['seed']
+    environment:
+      <<: *demo-secrets
+      DATABASE_URI: postgres://postgres:postgres@postgres:5432/pijamas
+      PAYLOAD_DB_PUSH: 'true'
+    volumes:
+      - pijamas-demo-media:/app/apps/web/media
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: runner
+      extra_hosts:
+        - 'host.docker.internal:host-gateway'
+      args:
+        DATABASE_URI: postgres://postgres:postgres@host.docker.internal:5433/pijamas
+        COMPILE_TOKEN: cambia-este-secreto-por-uno-de-al-menos-32-caracteres
+        NEXT_PUBLIC_SERVER_URL: http://localhost:3000
+        SEED_ADMIN_EMAIL: admin@pijamas.local
+        SEED_ADMIN_PASSWORD: cambia-esta-clave
+    container_name: pijamas-demo-web
+    restart: unless-stopped
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '3000:3000'
+    environment:
+      <<: *demo-secrets
+      DATABASE_URI: postgres://postgres:postgres@postgres:5432/pijamas
+      PAYLOAD_DB_PUSH: 'true'
+      BLOB_READ_WRITE_TOKEN: ''
+    volumes:
+      - pijamas-demo-media:/app/apps/web/media
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pijamas-demo-postgres-data:
+  pijamas-demo-media:

@@ -4,7 +4,8 @@
 
 | Entorno | Base de datos | Imágenes | URL | Uso |
 | --- | --- | --- | --- | --- |
-| Local | Postgres en Docker (`docker compose up -d`, puerto **5433** del host) | Disco local (`apps/web/media`, ignorado en git) | `http://localhost:3000` | Desarrollo y pruebas |
+| Local (desarrollo) | Postgres en Docker (`pnpm db:up` / `docker compose up -d`, puerto **5433**) | Disco local (`apps/web/media`, ignorado en git) | `http://localhost:3000` | Con Node + `pnpm dev` |
+| Local (demo solo Docker) | Postgres + app (`docker-compose.demo.yml` / `scripts/demo-up`) | Volumen Docker `pijamas-demo-media` | `http://localhost:3000` | Prueba sin instalar Node |
 | Vista previa (Vercel Preview) | Rama de Neon por PR (integración Neon–Vercel) o base `pijamas_preview` | Store de Blob de pruebas | `*.vercel.app` | Revisión de PR |
 | Producción | Neon `main` | Store de Blob de producción | Dominio propio | Tienda real |
 
@@ -28,10 +29,24 @@ Nunca se comprometen valores reales. En Vercel se cargan en Project Settings →
 
 ## 3. Instalación local
 
+### 3.1 Solo Docker (prueba / cliente)
+
+Ver `docs/local-testing.md`. Resumen:
+
+```bash
+# Windows: powershell -ExecutionPolicy Bypass -File .\scripts\demo-up.ps1
+# macOS/Linux: ./scripts/demo-up.sh
+pnpm demo:docker   # si ya tienes pnpm
+```
+
+Usa `docker-compose.demo.yml`: Postgres + imagen de la tienda. Credenciales de demo en ese archivo y en la guía local.
+
+### 3.2 Desarrollo con Node
+
 ```bash
 corepack enable                 # habilita pnpm (Node 22)
 pnpm install
-cp .env.example .env            # editar valores
+cp apps/web/.env.example apps/web/.env   # editar valores
 docker compose up -d            # Postgres 17 en localhost:5433
 pnpm --filter web payload migrate
 pnpm --filter web seed          # datos de demostración y usuario admin
@@ -59,7 +74,9 @@ Migraciones: Payload genera migraciones SQL con `pnpm --filter web payload migra
 docker build -f apps/web/Dockerfile -t pijamas .
 ```
 
-La compilación conecta a Postgres para prerenderizar. El valor por defecto apunta al Postgres local de Docker Desktop (`host.docker.internal:5433`). En otro entorno pasa la cadena real: `--build-arg DATABASE_URI=...`. Esa cadena no queda como secreto de ejecución; al arrancar el contenedor hay que volver a definir `DATABASE_URI` y `PAYLOAD_SECRET`.
+La compilación ejecuta el seed de demostración y prerenderiza. El valor por defecto de `DATABASE_URI` apunta al Postgres del host en Docker Desktop (`host.docker.internal:5433`). Por eso, en demo local, Postgres debe estar arriba **antes** del `build` (el script `demo-up` lo ordena). En otro entorno pasa la cadena real: `--build-arg DATABASE_URI=...`. Esa cadena no queda como secreto de ejecución; al arrancar el contenedor hay que volver a definir `DATABASE_URI` y `PAYLOAD_SECRET` (el mismo secreto que en el build si la base ya tiene el seed).
+
+Etapas del Dockerfile: `deps`, `seeder` (solo catálogo), `builder`, `runner` (app).
 
 Variables iguales salvo `BLOB_READ_WRITE_TOKEN`, que se sustituye por `S3_*` con el adaptador `@payloadcms/storage-s3` (Cloudflare R2 u otro compatible). `PAYLOAD_DB_PUSH` debe quedar vacío en el contenedor. Pasos genéricos para Railway/Render/Coolify:
 
